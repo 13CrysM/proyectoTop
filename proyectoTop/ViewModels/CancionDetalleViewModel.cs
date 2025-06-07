@@ -64,6 +64,7 @@ namespace proyectoTop.ViewModels
                 await App.Current.MainPage.DisplayAlert("Error", $"No se pudo reproducir el audio: {ex.Message}", "OK");
             }*/
             App.Current.MainPage.DisplayAlert("Reproducir", $"Reproduciendo: {Cancion.Title}", "OK");
+
         }
         public ICommand LikeCommand { get; }
         public ICommand ReproducirCommand { get; }
