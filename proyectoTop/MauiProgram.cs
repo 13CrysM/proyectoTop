@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace proyectoTop
 {
@@ -7,8 +8,11 @@ namespace proyectoTop
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit() // 👈 Necesario para que funcionen los controles del toolkit
+                .UseMauiCommunityToolkitMediaElement() // ✅ Necesario
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

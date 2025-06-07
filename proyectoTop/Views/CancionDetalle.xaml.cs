@@ -10,4 +10,9 @@ public partial class CancionDetalle : ContentPage
         InitializeComponent();
         BindingContext = new CancionDetalleViewModel(cancion);
     }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        Media.Pause();
+    }
 }
