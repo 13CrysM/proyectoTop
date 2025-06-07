@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="proyectoTop.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="rock_and_roll.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a race car number eight" />
+
+            <Label
+                Text="Top 10 Music"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="48"
+                FontAttributes="Bold"/>
+            <Label
+                Text="by Crystian Muro"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontFamily="DeathRatle"
+                FontSize="Small"/>
+            <!--<Label
+            Text="Welcome to &#10;.NET Multi-platform App UI"
+            Style="{StaticResource SubHeadline}"
+            SemanticProperties.HeadingLevel="Level2"
+            SemanticProperties.Description="Welcome to dot net Multi platform App U I" />-->
+
+            <Button
+                x:Name="CounterBtn"
+                Text="Ingresar"
+                SemanticProperties.Hint="Ingresa a la lista de Artistas"
+                Clicked="OnStartClicked"
+                HorizontalOptions="Fill"
+                FontSize="20" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

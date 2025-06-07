@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             x:Class="proyectoTop.Views.ListaArtistas"  
+             Title="Top 10 Metal">
+    <CollectionView ItemsSource="{Binding Artistas}" >
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame CornerRadius="10" HeightRequest="120" Padding="10" Margin="5" HasShadow="True">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Image Source="{Binding ImageUrl}"
+                           WidthRequest="100"
+                           HeightRequest="100"
+                           Aspect="AspectFit" />
+                        <StackLayout Grid.Column="1" Padding="10,0">
+                            <Label Text="{Binding Name}" FontSize="24" FontAttributes="Bold" />
+                            <Label Text="{Binding Ranking, StringFormat='Ranking: # {0}'}" FontSize="16" />
+                            <Label Text="{Binding LastAlbum, StringFormat='Último álbum: {0}'}" FontSize="14" />
+                        </StackLayout>
+                    </Grid>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnArtistTapped" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

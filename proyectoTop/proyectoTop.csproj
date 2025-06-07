@@ -1,0 +1,189 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>proyectoTop</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>proyectoTop</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.proyectotop</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\Songs\FallingInReverse\f_drug.jpg" />
+	  <None Remove="Resources\Images\Songs\FallingInReverse\f_life.jpg" />
+	  <None Remove="Resources\Images\Songs\FallingInReverse\f_popular.jpg" />
+	  <None Remove="Resources\Images\Songs\FallingInReverse\f_voices.jpg" />
+	  <None Remove="Resources\Images\Songs\FallingInReverse\f_watch.jpg" />
+	  <None Remove="Resources\Images\Songs\Ghost\g_cirice.png" />
+	  <None Remove="Resources\Images\Songs\Ghost\g_dance.jpg" />
+	  <None Remove="Resources\Images\Songs\Ghost\g_mary.jpg" />
+	  <None Remove="Resources\Images\Songs\Ghost\g_square.jpg" />
+	  <None Remove="Resources\Images\Songs\Ghost\g_year.jpg" />
+	  <None Remove="Resources\Images\Songs\IronMaiden\im_fear.jpg" />
+	  <None Remove="Resources\Images\Songs\IronMaiden\im_hallowed.jpg" />
+	  <None Remove="Resources\Images\Songs\IronMaiden\im_run.jpg" />
+	  <None Remove="Resources\Images\Songs\IronMaiden\im_trooper.jpg" />
+	  <None Remove="Resources\Images\Songs\IronMaiden\im_wasted.jpg" />
+	  <None Remove="Resources\Images\Songs\LedZeppelin\lz_black.jpg" />
+	  <None Remove="Resources\Images\Songs\LedZeppelin\lz_immigrant.jpg" />
+	  <None Remove="Resources\Images\Songs\LedZeppelin\lz_kashmir.jpg" />
+	  <None Remove="Resources\Images\Songs\LedZeppelin\lz_stairway.jpg" />
+	  <None Remove="Resources\Images\Songs\LedZeppelin\lz_whole.jpg" />
+	  <None Remove="Resources\Images\Songs\Metallica\m_if_darkness_had_a_son.png" />
+	  <None Remove="Resources\Images\Songs\Metallica\m_screaming_suicide.png" />
+	  <None Remove="Resources\Images\Songs\Metallica\m_sleepwalk_my_lyfe_away.png" />
+	  <None Remove="Resources\Images\Songs\Muse\mu_hole.jpg" />
+	  <None Remove="Resources\Images\Songs\Muse\mu_hysteria.png" />
+	  <None Remove="Resources\Images\Songs\Muse\mu_starlight.png" />
+	  <None Remove="Resources\Images\Songs\Muse\mu_time.png" />
+	  <None Remove="Resources\Images\Songs\Muse\mu_uprising.png" />
+	  <None Remove="Resources\Images\Songs\Slayer\sl_abyss.jpg" />
+	  <None Remove="Resources\Images\Songs\Slayer\sl_angel.jpg" />
+	  <None Remove="Resources\Images\Songs\Slayer\sl_blood.png" />
+	  <None Remove="Resources\Images\Songs\Slayer\sl_south.jpg" />
+	  <None Remove="Resources\Images\Songs\Slayer\sl_war.jpg" />
+	  <None Remove="Resources\Images\Songs\Soad\so_aerials.jpg" />
+	  <None Remove="Resources\Images\Songs\Soad\so_byob.png" />
+	  <None Remove="Resources\Images\Songs\Soad\so_chop.jpg" />
+	  <None Remove="Resources\Images\Songs\Soad\so_lonely.jpg" />
+	  <None Remove="Resources\Images\Songs\Soad\so_toxicity.jpg" />
+	  <None Remove="Resources\Images\Songs\Tool\t_fear.png" />
+	  <None Remove="Resources\Images\Songs\Tool\t_lateralus.png" />
+	  <None Remove="Resources\Images\Songs\Tool\t_pot.png" />
+	  <None Remove="Resources\Images\Songs\Tool\t_schism.jpg" />
+	  <None Remove="Resources\Images\Songs\Tool\t_tempest.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="NewFolder\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Bands\black_sabbath_logo.png" />
+	  <MauiImage Include="Resources\Images\Bands\fallin_logo.png" />
+	  <MauiImage Include="Resources\Images\Bands\ghost_logo.png" />
+	  <MauiImage Include="Resources\Images\Bands\iron_maiden_logo.jpg" />
+	  <MauiImage Include="Resources\Images\Bands\led_zeppelin_logo.png" />
+	  <MauiImage Include="Resources\Images\Bands\metallica_logo.png" />
+	  <MauiImage Include="Resources\Images\Bands\muse_logo.png" />
+	  <MauiImage Include="Resources\Images\Bands\slayer_logo.png" />
+	  <MauiImage Include="Resources\Images\Bands\system_of_a_down_logo.png" />
+	  <MauiImage Include="Resources\Images\Bands\tool_logo.png" />
+	  <MauiImage Include="Resources\Images\Songs\FallingInReverse\f_drug.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\FallingInReverse\f_life.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\FallingInReverse\f_popular.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\FallingInReverse\f_voices.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\FallingInReverse\f_watch.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Ghost\g_cirice.png" />
+	  <MauiImage Include="Resources\Images\Songs\Ghost\g_dance.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Ghost\g_mary.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Ghost\g_square.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Ghost\g_year.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\IronMaiden\im_fear.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\IronMaiden\im_hallowed.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\IronMaiden\im_run.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\IronMaiden\im_trooper.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\IronMaiden\im_wasted.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\LedZeppelin\lz_black.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\LedZeppelin\lz_immigrant.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\LedZeppelin\lz_kashmir.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\LedZeppelin\lz_stairway.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\LedZeppelin\lz_whole.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Metallica\m_if_darkness_had_a_son.png" />
+	  <MauiImage Include="Resources\Images\Songs\Metallica\m_screaming_suicide.png" />
+	  <MauiImage Include="Resources\Images\Songs\Metallica\m_sleepwalk_my_lyfe_away.png" />
+	  <MauiImage Include="Resources\Images\Songs\Muse\mu_hole.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Muse\mu_hysteria.png" />
+	  <MauiImage Include="Resources\Images\Songs\Muse\mu_starlight.png" />
+	  <MauiImage Include="Resources\Images\Songs\Muse\mu_time.png" />
+	  <MauiImage Include="Resources\Images\Songs\Muse\mu_uprising.png" />
+	  <MauiImage Include="Resources\Images\Songs\Sabbath\heaven_song.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Sabbath\iron_man.png" />
+	  <MauiImage Include="Resources\Images\Songs\Metallica\m_la.png" />
+	  <MauiImage Include="Resources\Images\Songs\Metallica\m_tofargone.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Sabbath\paranoid.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Sabbath\sweet_leaf.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Slayer\sl_abyss.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Slayer\sl_angel.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Slayer\sl_blood.png" />
+	  <MauiImage Include="Resources\Images\Songs\Slayer\sl_south.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Slayer\sl_war.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Soad\so_aerials.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Soad\so_byob.png" />
+	  <MauiImage Include="Resources\Images\Songs\Soad\so_chop.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Soad\so_lonely.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Soad\so_toxicity.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Tool\t_fear.png" />
+	  <MauiImage Include="Resources\Images\Songs\Tool\t_lateralus.png" />
+	  <MauiImage Include="Resources\Images\Songs\Tool\t_pot.png" />
+	  <MauiImage Include="Resources\Images\Songs\Tool\t_schism.jpg" />
+	  <MauiImage Include="Resources\Images\Songs\Tool\t_tempest.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\CancionDetalle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CancionesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ListaArtistas.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+</Project>
