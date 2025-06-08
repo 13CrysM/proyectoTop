@@ -40,7 +40,7 @@ namespace proyectoTop.ViewModels
                 }
             }
         }
-        private void ReproducirCancion()
+        private async void ReproducirCancion()
         {/*
             // Aquí va la lógica de reproducción.
             // Por ejemplo, si usas un archivo local o remoto:
