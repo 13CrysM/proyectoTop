@@ -10,11 +10,18 @@
         <Frame CornerRadius="10" Padding="10" Margin="20" HasShadow="True">
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" ColumnSpacing="10">
                 <Image Source="{Binding Cancion.ImageUrl}" HeightRequest="200" Aspect="AspectFit" Grid.Row="0" Grid.Column="0"/>
-                <ImageButton Source="boton_play.png"
+                <ImageButton Source="youtube.png"
+                             Command="{Binding ReproducirCommand}"
+                             IsEnabled="{Binding IsNotBusy}"
                              WidthRequest="40" HeightRequest="40"
                              VerticalOptions="Start" HorizontalOptions="End"
-                             Aspect="AspectFill" Grid.Row="0" Grid.Column="1"
-                             Command="{Binding ReproducirCommand}"/>
+                             Aspect="AspectFit" Grid.Row="0" Grid.Column="1">
+                    <ImageButton.Triggers>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsBusy}" Value="True">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </DataTrigger>
+                    </ImageButton.Triggers>
+                </ImageButton>
                 <ImageButton Source="like.png" WidthRequest="40" HeightRequest="40" VerticalOptions="End" HorizontalOptions="End" Aspect="AspectFill" Grid.Row="0" Grid.Column="1" Command="{Binding LikeCommand}"/>
                 <Label Text="{Binding Likes, StringFormat='{0} likes'}" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="End" Margin="0, 0, 50, 0" Grid.Row="0" Grid.Column="1"/>
                 <StackLayout  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,10,0,0" Spacing="6">
@@ -23,8 +30,13 @@
                     <Label Text="{Binding Cancion.Duration, StringFormat='Duración: {0}'}" />
                     <Label Text="{Binding Cancion.Lyrics}" LineBreakMode="WordWrap" />
                 </StackLayout>
-                <toolkit:MediaElement x:Name="Media" Source="embed://lz_blackdog.mp3" ShouldAutoPlay="True" IsVisible="False" x:FieldModifier="public" />
-
+                <!--<toolkit:MediaElement x:Name="Media" IsVisible="False" x:FieldModifier="public" />-->
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                   IsRunning="{Binding IsBusy}"
+                                   WidthRequest="40" HeightRequest="40"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Grid.Row="0" Grid.Column="1"/>
             </Grid>
 
         </Frame>

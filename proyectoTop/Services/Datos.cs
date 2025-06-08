@@ -21,7 +21,7 @@ namespace proyectoTop.Services
                 Canciones = new List<Cancion>
                 {
                     new Cancion { Title = "War Pigs", ImageUrl = "rock_song.png",
-                              ReleaseYear = 1970, Duration = "7:55", Likes = 9876, AudioUrl = "lz_blackdog.mp3",
+                              ReleaseYear = 1970, Duration = "7:55", Likes = 9876, YoutubeId = "LQUXuQ6Zd9w",
                               Lyrics = "Generals gathered in their masses\r\nJust like witches at black masses\r\nEvil minds that plot destruction\r\n,Sorcerer of death's construction\r\nIn the fields, the bodies burning\r\nAs the war machine keeps turning\r\nDeath and hatred to mankind\r\nPoisoning their brainwashed minds\r\nOh, Lord, yeah\r\nPoliticians hide themselves away\r\nThey only started the war\r\nWhy should they go out to fight?\r\nThey leave that role to the poor, yeah\r\nTime will tell on their power minds\r\nMaking war just for fun\r\nTreating people just like pawns in chess\r\nWait 'til their judgement day comes, yeah\r\nNow in darkness, world stops turning\r\nAshes where their bodies burning\r\nNo more war pigs have the power\r\nHand of God has struck the hour\r\nDay of judgement, God is calling\r\nOn their knees, the war pigs crawling\r\nBegging mercy for their sins\r\nSatan laughing, spreads his wings\r\nOh, Lord, yeah"},
                     new Cancion { Title = "Paranoid", ImageUrl = "paranoid.jpg",
                               ReleaseYear = 1970, Duration = "2:49", Likes = 8765,

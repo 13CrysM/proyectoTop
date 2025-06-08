@@ -16,5 +16,6 @@ namespace proyectoTop.Models
         public string Lyrics { get; set; }
         public int Likes { get; set; } = 0;
         public string AudioUrl { get; set; } // URL del archivo de audio
+        public string YoutubeId { get; set; }
     }
 }
