@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,24 +15,25 @@ namespace proyectoTop.ViewModels
     {
         private int _likes;
         private bool _mostrarVideo;
+        private bool _isBusy;
+        public bool IsNotBusy => !IsBusy;
         public Cancion Cancion { get; }
-
-        public CancionDetalleViewModel(Cancion cancion)
+        public ICommand LikeCommand { get; }
+        public ICommand ReproducirCommand { get; }
+        public ICommand MostrarVideoCommand { get; }
+        public bool IsBusy
         {
-            Cancion = cancion;
-            _likes = cancion.Likes; // Inicializa con el valor del modelo
-            LikeCommand = new Command(() =>
+            get => _isBusy;
+            set
             {
-                Likes++;
-                Cancion.Likes = Likes; // Opcional: sincronizar el modelo
-            });
-            ReproducirCommand = new Command(ReproducirCancion);
-            MostrarVideoCommand = new Command(() =>
-            {
-                MostrarVideo = true;
-            });
+                if (_isBusy != value)
+                {
+                    _isBusy = value;
+                    OnPropertyChanged(nameof(IsBusy));
+                    OnPropertyChanged(nameof(IsNotBusy)); // Notifica también el cambio de IsNotBusy
+                }
+            }
         }
-
         public int Likes
         {
             get => _likes;
@@ -44,6 +46,23 @@ namespace proyectoTop.ViewModels
                 }
             }
         }
+        public CancionDetalleViewModel(Cancion cancion)
+        {
+            Cancion = cancion;
+            _likes = cancion.Likes; // Inicializa con el valor del modelo
+            LikeCommand = new Command(() =>
+            {
+                Likes++;
+                Cancion.Likes = Likes; // Opcional: sincronizar el modelo
+            });
+            ReproducirCommand = new Command(async () => await ReproducirCancion());
+            MostrarVideoCommand = new Command(() =>
+            {
+                MostrarVideo = true;
+            });
+        }
+
+
         public bool MostrarVideo
         {
             get => _mostrarVideo;
@@ -56,38 +75,65 @@ namespace proyectoTop.ViewModels
                 }
             }
         }
-        private async void ReproducirCancion()
-        {/*
-            // Aquí va la lógica de reproducción.
-            // Por ejemplo, si usas un archivo local o remoto:
-            // await AudioPlayer.Current.PlayAsync("url_o_archivo.mp3");
+        private async Task ReproducirCancion()
+        {
+            if (IsBusy) return;
 
-            // Para fines de prueba:
-            App.Current.MainPage.DisplayAlert("Reproducir", $"Reproduciendo: {Cancion.Title}", "OK");*/
-
-            /*try
+            IsBusy = true;
+            try
             {
-                var audioManager = AudioManager.Current;
+                if (string.IsNullOrWhiteSpace(Cancion.YoutubeId))
+                {
+                    await App.Current.MainPage.DisplayAlert("Aviso", "Este video no está disponible", "OK");
+                    return;
+                }
 
-                // Abre el archivo desde Resources/Raw
-                using var audioStream = await FileSystem.OpenAppPackageFileAsync(Cancion.AudioUrl);
+                // Opción 1: Abrir directamente en la app de YouTube (si está instalada)
+                var youtubeAppUri = $"vnd.youtube://{Cancion.YoutubeId}";
+                var canOpenYoutubeApp = await Launcher.CanOpenAsync(youtubeAppUri);
 
-                var player = audioManager.CreatePlayer(audioStream);
-                player.Play();
+                if (canOpenYoutubeApp)
+                {
+                    await Launcher.OpenAsync(youtubeAppUri);
+                }
+                else
+                {
+                    // Opción 2: Abrir en navegador web
+                    var youtubeWebUrl = $"https://youtube.com/watch?v={Cancion.YoutubeId}";
+                    await Launcher.OpenAsync(youtubeWebUrl);
+                }
+            }
+            catch (FeatureNotSupportedException)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "Esta función no es soportada en tu dispositivo", "OK");
+            }
+            catch (UriFormatException)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "El enlace de video no es válido", "OK");
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Error", $"No se pudo reproducir el audio: {ex.Message}", "OK");
-            }*/
-            App.Current.MainPage.DisplayAlert("Reproducir", $"Reproduciendo: {Cancion.Title}", "OK");
+                Debug.WriteLine($"Error al abrir YouTube: {ex}");
+                await App.Current.MainPage.DisplayAlert("Error", "No se pudo abrir YouTube", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
-        public ICommand LikeCommand { get; }
-        public ICommand ReproducirCommand { get; }
-        public ICommand MostrarVideoCommand { get; }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string name) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+            // Notifica cambios en propiedades dependientes
+            if (propertyName == nameof(IsBusy))
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotBusy)));
+            }
+        }
     }
 }
