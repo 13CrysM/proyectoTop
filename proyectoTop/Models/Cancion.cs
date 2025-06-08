@@ -14,5 +14,7 @@ namespace proyectoTop.Models
         public string Duration { get; set; }
         public string Lyrics { get; set; }
         public int Likes { get; set; } = 0;
+        public string VideoUrl { get; set; }
+        public string YoutubeId { get; set; }
     }
 }

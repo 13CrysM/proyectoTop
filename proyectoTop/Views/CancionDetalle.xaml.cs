@@ -10,4 +10,18 @@ public partial class CancionDetalle : ContentPage
         InitializeComponent();
         BindingContext = new CancionDetalleViewModel(cancion);
     }
+
+    /*private async void OnPlayClicked(object sender, EventArgs e)
+    {
+        var stream = await FileSystem.OpenAppPackageFileAsync("video.html");
+        using var reader = new StreamReader(stream);
+        string htmlContent = reader.ReadToEnd();
+
+        videoWebView.Source = new HtmlWebViewSource
+        {
+            Html = htmlContent
+        };
+
+        videoWebView.IsVisible = true;
+    }*/
 }

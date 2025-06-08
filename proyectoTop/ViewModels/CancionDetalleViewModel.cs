@@ -13,6 +13,7 @@ namespace proyectoTop.ViewModels
     public class CancionDetalleViewModel : INotifyPropertyChanged
     {
         private int _likes;
+        private bool _mostrarVideo;
         public Cancion Cancion { get; }
 
         public CancionDetalleViewModel(Cancion cancion)
@@ -25,7 +26,10 @@ namespace proyectoTop.ViewModels
                 Cancion.Likes = Likes; // Opcional: sincronizar el modelo
             });
             ReproducirCommand = new Command(ReproducirCancion);
-
+            MostrarVideoCommand = new Command(() =>
+            {
+                MostrarVideo = true;
+            });
         }
 
         public int Likes
@@ -40,7 +44,19 @@ namespace proyectoTop.ViewModels
                 }
             }
         }
-        private void ReproducirCancion()
+        public bool MostrarVideo
+        {
+            get => _mostrarVideo;
+            set
+            {
+                if (_mostrarVideo != value)
+                {
+                    _mostrarVideo = value;
+                    OnPropertyChanged(nameof(MostrarVideo));
+                }
+            }
+        }
+        private async void ReproducirCancion()
         {/*
             // Aquí va la lógica de reproducción.
             // Por ejemplo, si usas un archivo local o remoto:
@@ -67,6 +83,7 @@ namespace proyectoTop.ViewModels
         }
         public ICommand LikeCommand { get; }
         public ICommand ReproducirCommand { get; }
+        public ICommand MostrarVideoCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
