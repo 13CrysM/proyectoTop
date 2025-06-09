@@ -56,10 +56,7 @@ namespace proyectoTop.ViewModels
                 Cancion.Likes = Likes; // Opcional: sincronizar el modelo
             });
             ReproducirCommand = new Command(async () => await ReproducirCancion());
-            MostrarVideoCommand = new Command(() =>
-            {
-                MostrarVideo = true;
-            });
+            MostrarVideoCommand = new Command(async () => await EjecutarMostrarVideo());
         }
 
 
@@ -115,6 +112,31 @@ namespace proyectoTop.ViewModels
             {
                 Debug.WriteLine($"Error al abrir YouTube: {ex}");
                 await App.Current.MainPage.DisplayAlert("Error", "No se pudo abrir YouTube", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+        private async Task EjecutarMostrarVideo()
+        {
+            if (IsBusy) return;
+
+            IsBusy = true;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Cancion?.VideoUrl))
+                {
+                    await App.Current.MainPage.DisplayAlert("Aviso", "Este video no tiene un enlace disponible", "OK");
+                    return;
+                }
+
+                MostrarVideo = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error al mostrar video: {ex}");
+                await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un problema al intentar mostrar el video", "OK");
             }
             finally
             {
