@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using proyectoTop.Models;
 using proyectoTop.Views;
@@ -22,7 +17,17 @@ namespace proyectoTop.ViewModels
         private async void OnCancionSeleccionada(Cancion cancion)
         {
             if (cancion == null) return;
-            await Application.Current.MainPage.Navigation.PushAsync(new CancionDetalle(cancion));
+
+            var mainPage = Application.Current?.MainPage;
+            if (mainPage?.Navigation != null)
+            {
+                await mainPage.Navigation.PushAsync(new CancionDetalle(cancion));
+            }
+            else
+            {
+                // Manejo de error o lógica alternativa si MainPage o Navigation son nulos
+                Console.WriteLine("Error: MainPage o Navigation son nulos.");
+            }
         }
     }
 }

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using proyectoTop.Models;
 
@@ -57,8 +51,8 @@ namespace proyectoTop.ViewModels
             });
             ReproducirCommand = new Command(async () => await ReproducirCancion());
             MostrarVideoCommand = new Command(async () => await EjecutarMostrarVideo());
+            PropertyChanged = delegate { }; // Inicializa el evento para evitar valores NULL
         }
-
 
         public bool MostrarVideo
         {
@@ -79,13 +73,18 @@ namespace proyectoTop.ViewModels
             IsBusy = true;
             try
             {
+                if (App.Current?.MainPage == null)
+                {
+                    Debug.WriteLine("MainPage es null. No se puede mostrar la alerta.");
+                    return;
+                }
+
                 if (string.IsNullOrWhiteSpace(Cancion.YoutubeId))
                 {
                     await App.Current.MainPage.DisplayAlert("Aviso", "Este video no está disponible", "OK");
                     return;
                 }
 
-                // Opción 1: Abrir directamente en la app de YouTube (si está instalada)
                 var youtubeAppUri = $"vnd.youtube://{Cancion.YoutubeId}";
                 var canOpenYoutubeApp = await Launcher.CanOpenAsync(youtubeAppUri);
 
@@ -95,23 +94,31 @@ namespace proyectoTop.ViewModels
                 }
                 else
                 {
-                    // Opción 2: Abrir en navegador web
                     var youtubeWebUrl = $"https://youtube.com/watch?v={Cancion.YoutubeId}";
                     await Launcher.OpenAsync(youtubeWebUrl);
                 }
             }
             catch (FeatureNotSupportedException)
             {
-                await App.Current.MainPage.DisplayAlert("Error", "Esta función no es soportada en tu dispositivo", "OK");
+                if (App.Current?.MainPage != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", "Esta función no es soportada en tu dispositivo", "OK");
+                }
             }
             catch (UriFormatException)
             {
-                await App.Current.MainPage.DisplayAlert("Error", "El enlace de video no es válido", "OK");
+                if (App.Current?.MainPage != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", "El enlace de video no es válido", "OK");
+                }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error al abrir YouTube: {ex}");
-                await App.Current.MainPage.DisplayAlert("Error", "No se pudo abrir YouTube", "OK");
+                if (App.Current?.MainPage != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", "No se pudo abrir YouTube", "OK");
+                }
             }
             finally
             {
@@ -125,6 +132,12 @@ namespace proyectoTop.ViewModels
             IsBusy = true;
             try
             {
+                if (App.Current?.MainPage == null)
+                {
+                    Debug.WriteLine("MainPage es null. No se puede mostrar la alerta.");
+                    return;
+                }
+
                 if (string.IsNullOrWhiteSpace(Cancion?.VideoUrl))
                 {
                     await App.Current.MainPage.DisplayAlert("Aviso", "Este video no tiene un enlace disponible", "OK");
@@ -136,7 +149,10 @@ namespace proyectoTop.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error al mostrar video: {ex}");
-                await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un problema al intentar mostrar el video", "OK");
+                if (App.Current?.MainPage != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", "Ocurrió un problema al intentar mostrar el video", "OK");
+                }
             }
             finally
             {
@@ -144,8 +160,7 @@ namespace proyectoTop.ViewModels
             }
         }
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

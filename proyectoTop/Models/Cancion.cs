@@ -8,13 +8,13 @@ namespace proyectoTop.Models
 {
     public class Cancion
     {
-        public string Title { get; set; }
-        public string ImageUrl { get; set; }
+        public required string Title { get; set; }
+        public required string ImageUrl { get; set; } // Se agregó el modificador 'required'
         public int ReleaseYear { get; set; }
-        public string Duration { get; set; }
-        public string Lyrics { get; set; }
+        public required string Duration { get; set; } // Se agregó el modificador 'required'
+        public required string Lyrics { get; set; }
         public int Likes { get; set; } = 0;
-        public string VideoUrl { get; set; }
-        public string YoutubeId { get; set; }
+        public required string VideoUrl { get; set; }
+        public required string YoutubeId { get; set; }
     }
 }

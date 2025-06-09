@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using proyectoTop.Models;
 using proyectoTop.Services;
@@ -27,6 +23,7 @@ namespace proyectoTop.ViewModels
             Artistas = Datos.GetTop10Artists()
                 .OrderBy(a => a.Ranking)
                 .ToList();
+            OnPropertyChanged(nameof(Artistas)); // Notificar el cambio de propiedad
         }
 
         public ICommand ArtistaSeleccionadoCommand { get; }
@@ -40,6 +37,11 @@ namespace proyectoTop.ViewModels
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new CancionesPage(artista.Canciones));
             }
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
