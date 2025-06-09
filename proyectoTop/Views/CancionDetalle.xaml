@@ -17,7 +17,7 @@
                     </ImageButton.Triggers>
                 </ImageButton>
                 <ImageButton Source="like.png" WidthRequest="40" HeightRequest="40" VerticalOptions="End" HorizontalOptions="End" Aspect="AspectFill" Grid.Row="0" Grid.Column="1" Command="{Binding LikeCommand}"/>
-                <Label Text="{Binding Likes, StringFormat='{0} likes'}" FontAttributes="B  od" VerticalOptions="End" HorizontalOptions="End" Margin="0, 0, 50, 0" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="{Binding Likes, StringFormat='{0} likes'}" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="End" Margin="0, 0, 50, 0" Grid.Row="0" Grid.Column="1"/>
 
                 <StackLayout  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,10,0,0" Spacing="6">
                     <Label Text="{Binding Cancion.Title}" FontSize="24" FontAttributes="Bold" />
