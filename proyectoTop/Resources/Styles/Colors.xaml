@@ -10,10 +10,10 @@
     <Color x:Key="LineaClaro">#5D0E41</Color>
     <Color x:Key="TextoClaro">#00224D</Color>-->
 
-    <Color x:Key="BaseClaro">#FDEA2E</Color>
-    <Color x:Key="FondoClaro">#F40968</Color>
-    <Color x:Key="LineaClaro">#512E5E</Color>
-    <Color x:Key="TextoClaro">#20194A</Color>
+    <Color x:Key="BaseClaro">#DCF2F1</Color>
+    <Color x:Key="FondoClaro">#7FC7D9</Color>
+    <Color x:Key="LineaClaro">#365486</Color>
+    <Color x:Key="TextoClaro">#0F1035</Color>
 
     <Color x:Key="BaseOscuro">#171717</Color>
     <Color x:Key="FondoOscuro">#444444</Color>
